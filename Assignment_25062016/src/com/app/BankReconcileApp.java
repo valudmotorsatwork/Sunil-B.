@@ -5,7 +5,6 @@ import com.dao.ReconcileImpl;
  * @ Sunil Birute
  * Date : 27-06-2016
  */
-
 public class BankReconcileApp 
 {	
 	public static void main(String[] args) 

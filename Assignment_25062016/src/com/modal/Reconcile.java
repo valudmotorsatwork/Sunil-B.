@@ -1,5 +1,4 @@
 package com.modal;
-
 public class Reconcile 
 {
 	private String conBranch;
