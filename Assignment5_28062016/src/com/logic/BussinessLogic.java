@@ -9,6 +9,7 @@ import java.util.Set;
 
 public class BussinessLogic 
 {
+	NumbersToWords num = new NumbersToWords();
 	public List<String> readInputString()
 	{
 		Scanner sc = new Scanner( System.in ); 
@@ -18,14 +19,13 @@ public class BussinessLogic
 		List<String> list = Arrays.asList(input.split(" ")); 
 		return list;
 	}
-	
 	public void display(List<String> list)
 	{	 
 		System.out.println("***** Output ******");
         Set<String> uniqueWords = new HashSet<String>(list);
         for (String word : uniqueWords) 
         {
-            System.out.println(word + ": " + Collections.frequency(list, word));
+            System.out.println(word + " : " + num.convertNumbersToWords( Collections.frequency(list, word)));
         }
 	}
 }

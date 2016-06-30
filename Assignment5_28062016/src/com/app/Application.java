@@ -8,7 +8,6 @@ import com.logic.BussinessLogic;
  * program should include the words in the table in the same order in which they appear in the text
  * @Sunil Birute
  */
-
 public class Application 
 {
 	public static void main(String[] args) 
