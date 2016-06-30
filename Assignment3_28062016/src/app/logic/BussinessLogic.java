@@ -7,46 +7,36 @@ public class BussinessLogic
 {
 	public String readInputString()
 	{
-		Scanner scanner = new Scanner(System.in);		
+		Scanner scanner = new Scanner(System.in);
 		HashMap<Character, Integer> mapString = new HashMap<>();
 		System.out.println(" Enter Input Word :" );
 		String tmp=scanner.nextLine();
 		System.out.println(" You Enterd : "+tmp);
-		for (char ch : tmp.toCharArray()) 
-		{
-			// Check character in String
-//			System.out.println(" Input OUTPUT"+ch);
-			if (mapString.containsKey(ch)) 
-			{
-				int val = mapString.get(ch);				
-				mapString.put(ch, val + 1);
-			}
-			else 
-			{
-				mapString.put(ch, 1);
-			}
-		}
 		return tmp;
 	}
 	
+
 	public void display(String tmp)
 	{	
 		HashMap<Character, Integer> mapString = new HashMap<>();
+		NumbersToWords numWords= new NumbersToWords();
+		HashMap<Character, String> mapOutputString = new HashMap<>();
 		System.out.println("***** Output ******");
 		for (char ch : tmp.toCharArray()) 
 		{
-			// Check character in String
 			if (mapString.containsKey(ch)) 
 			{
-				int val = mapString.get(ch);				
-				mapString.put(ch, val + 1);
+				int val = mapString.get(ch);
+				mapOutputString.put(ch,numWords.convertNumbersToWords(val + 1));
 			}
 			else 
-			{
-				mapString.put(ch, 1);
+			{	
+				mapOutputString.put(ch, "One");
 			}
 		}
-		System.out.println(mapString);
+		
+		System.out.println(mapOutputString);
 	}
-
+	
+	
 }
