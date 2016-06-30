@@ -15,10 +15,9 @@ public class BussinessLogic
 		String [] words = input.split(" ");
 		return words;
 	}
-	
 	public void display(String[] words)
 	{
-		System.out.println("***** Output ******");
+		System.out.println("\n***** Output ******");
 		
 		int maxno = 0; 
 		for (int i = 0; i < words.length; i++) 
@@ -31,11 +30,13 @@ public class BussinessLogic
 		{ 
 			frequencies[words[i].length()]++;
 		} 
+		System.out.println("*Word Length* | *Occurrences*");
 		for (int i = 0; i < frequencies.length; i++) 
 		{ 
 			if (frequencies[i] > 0 ) 
 			{ 
-				System.out.println("There are " + frequencies[i] +" " + i + "-letter words"); 
+				System.out.println("    "+i +"              " +frequencies[i]);
+//				System.out.println("There are " + frequencies[i] +" " + i + "-letter words"); 
 			} 
 		}
 	}
