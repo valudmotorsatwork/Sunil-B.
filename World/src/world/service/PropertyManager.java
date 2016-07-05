@@ -24,7 +24,7 @@ public class PropertyManager
 		// first open as a file relative to "current" directory
 		try 
 		{
-			instream = new FileInputStream( filename );
+			instream = new FileInputStream(filename);
 		} 
 		catch ( Exception e )
 		{ /* try again */ }
@@ -47,4 +47,8 @@ public class PropertyManager
 			instream.close();
 		} catch (IOException ioe) { /* shouldn't happen */ }
 	}
+	public static String getProperty(String key) {
+		return properties.getProperty(key);
+	}
+
 }

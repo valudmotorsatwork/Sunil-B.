@@ -1,4 +1,5 @@
 package world.app;
+
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -13,14 +14,17 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.UIManager;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import world.dao.CityDAO;
 import world.domain.City;
 import world.view.CityTableModel;
-public class CityBrowserApplication extends JFrame
+
+public class MainGUI extends JFrame
 {
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
 	private CityDAO cityDao = new CityDAO();
 	public static final String APP_TITLE ="City Browser";
@@ -36,11 +40,10 @@ public class CityBrowserApplication extends JFrame
 	private JButton updateButton;
 	JTable resultTable = new JTable();
 	JScrollPane scrollPane = new JScrollPane(resultTable);
-	public CityBrowserApplication() 
+	public MainGUI() 
 	{
 		super(APP_TITLE);
 		List<City> cityList = cityDao.loadCities();
-		System.out.println("Size "+cityList.size());
 		tableModel= new CityTableModel();
 		tableModel.setCities(cityList);
 		setLayout(new BorderLayout(4, 4));
@@ -49,11 +52,11 @@ public class CityBrowserApplication extends JFrame
 		resultTable = new JTable(tableModel);
 		JScrollPane scrollPane = new JScrollPane(resultTable);
 		add(scrollPane, BorderLayout.CENTER);
-		addListners();	
+		addListners();
 		pack();
 		setVisible(true);
 	}
-
+//Insert Fields Panel
 private JPanel addFieldsPanel() 
 {
 	JPanel inputFieldsPanel = new JPanel();
@@ -77,7 +80,7 @@ private JPanel addFieldsPanel()
     inputFieldsPanel.add(addControlPanel());
     return inputFieldsPanel;
 }
-
+//Search Fields Panel
 private JPanel searchFieldsPanel() 
 {
 	JPanel inputFieldsPanel = new JPanel();
@@ -89,7 +92,7 @@ private JPanel searchFieldsPanel()
     inputFieldsPanel.add(searchControlPanel());
     return inputFieldsPanel;
 }
-	
+//Save,Delete and Update Control Panel
 private JPanel addControlPanel() 
 {
 	JPanel contolPanel = new JPanel();
@@ -102,7 +105,7 @@ private JPanel addControlPanel()
 	contolPanel.add(updateButton);
 	return contolPanel;
 }
-
+// Search Control Panel
 private JPanel searchControlPanel() 
 {
 	JPanel contolPanel = new JPanel();
@@ -111,6 +114,7 @@ private JPanel searchControlPanel()
 	contolPanel.add(searchButton);
 	return contolPanel;
 }
+// Reset the text fields
 private void resetFields() 
 {
 	cityNameInput.setText("");
@@ -120,6 +124,7 @@ private void resetFields()
 }
 private void addListners() 
 {
+	// Action Listener for Search method
 	searchButton.addActionListener(new ActionListener() 
 	{
 		public void actionPerformed(ActionEvent arg0) 
@@ -129,7 +134,7 @@ private void addListners()
 				List<City> cities =null;
 				String search=cityNameSearchInput.getText();
 				if(search.equals(""))
-					search=" ";	
+				search=" ";	
 				if(cityNameSearchInput.getText().equals(""))
 				cities = cityDao.loadCities();
 				else
@@ -148,7 +153,7 @@ private void addListners()
 			}
 		}
 	});
-	
+	// Action Listener for Save method
 	addButton.addActionListener(new ActionListener() 
 	{
 		public void actionPerformed(ActionEvent arg0) 
@@ -171,7 +176,7 @@ private void addListners()
 			}
 		}
 	});
-	
+	// Action Listener for Delete method
 	deleteButton.addActionListener(new ActionListener() 
 	{
 		public void actionPerformed(ActionEvent arg0) 
@@ -179,7 +184,7 @@ private void addListners()
 			try 
 			{
 				List<City> cities =null;
-				City city1 =  cityDao.findByName(cityNameInput.getText()).get(0);  // only one Bangkok
+				City city1 =  cityDao.findByName(cityNameInput.getText()).get(0);
 				int id = city1.getCityId();
 				cityDao.delete(id);
 				cities = cityDao.loadCities();
@@ -193,6 +198,7 @@ private void addListners()
 			}
 		}
 	});
+	// Action Listener for Update method 
 	updateButton.addActionListener(new ActionListener() 
 	{
 		public void actionPerformed(ActionEvent arg0) 
@@ -217,7 +223,7 @@ private void addListners()
 			}
 		}
 	});
-	
+	// retrieve the selected record from Jtable
 	resultTable.getSelectionModel().addListSelectionListener(new ListSelectionListener()
 	{
         public void valueChanged(ListSelectionEvent event) 
@@ -246,6 +252,7 @@ private void addListners()
         }
     });
 	}
+	//Checking Jtable values null or not
 	public static boolean isEmpty(JTable jTable) 
 	{
 	    if (jTable != null && jTable.getModel() != null) 
@@ -254,15 +261,5 @@ private void addListners()
 	    }
 	    return false;
 	}
-	public static void main(String[] args) 
-	{
-		try 
-		{
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (Exception e) 
-		{
-			e.printStackTrace();
-		}
-		new CityBrowserApplication();
-	}
+
 }

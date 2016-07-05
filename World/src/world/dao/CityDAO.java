@@ -13,7 +13,7 @@ import world.domain.City;
 
 public class CityDAO 
 {
-	Connection conn=DBConnection.getConnection();
+	Connection conn=null;
 	public List<City> findByName(String name) 
 	{
 		List<City> results = new ArrayList<City>();
@@ -21,14 +21,16 @@ public class CityDAO
 		return results;
 		try 
 		{
+			conn=DBConnection.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement( "SELECT * FROM CITY WHERE NAME=?" );
 			pstmt.setString(1, name);
 			ResultSet rs = pstmt.executeQuery( );
 			while (rs.next())
 			results.add(resultToCity(rs));
 			rs.close();
+			conn.close();
 		} catch (SQLException sqle) {
-			throw new RuntimeException( sqle );
+			sqle.printStackTrace();
 		}
 		return results;
 	}
@@ -50,7 +52,7 @@ public class CityDAO
 		}
 		catch (SQLException sqle) 
 		{
-			throw new RuntimeException( sqle );
+			sqle.printStackTrace();
 		}
 		return city;
 	}
@@ -60,15 +62,17 @@ public class CityDAO
 		List<City> results = new ArrayList<City>();
 		try 
 		{
+			conn=DBConnection.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement( "SELECT * FROM CITY");
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next())
 			results.add(resultToCity(rs));
 			rs.close();
+			conn.close();
 		}
 		catch (SQLException sqle) 
 		{
-			throw new RuntimeException( sqle );
+			sqle.printStackTrace();
 		}
 		return results;
 	}
@@ -77,9 +81,8 @@ public class CityDAO
 	{
 		try 
 		{
-//			String sql = "INSERT INTO CITY (name,countrycode,district,population) VALUES('"+city.getCityName()+"','"+city.getCityCountryCode()+"','"+city.getCityDistrict()+"',"+city.getCityPopulation()+")";
-//			int key=0;
 			String maxId="select max(id) from city";
+			conn=DBConnection.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(maxId);
 			ResultSet rs=pstmt.executeQuery();
 			int maxCityId=0;
@@ -96,25 +99,28 @@ public class CityDAO
 			pstmt.setString(4, city.getCityDistrict());
 			pstmt.setInt(5, city.getCityPopulation());
 			pstmt.executeUpdate();
-//			String sql = "INSERT INTO city (name,district,countrycode,population) VALUES(?,?,?,?)";
-//			PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			pstmt.close();
+			conn.close();
 		}
 		catch (Exception sqle) 
 		{
-			throw new RuntimeException(sqle);
+			sqle.printStackTrace();
 		}
 	}
 	public void delete(int value) throws SQLException 
 	{
 		try 
 		{
+			conn=DBConnection.getConnection();
 			Statement pstmt = conn.createStatement();
 			pstmt = conn.createStatement();
 			pstmt.execute("DELETE FROM CITY WHERE ID ="+value);
+			pstmt.close();
+			conn.close();
 		}
 		catch (Exception sqle) 
 		{
-			throw new RuntimeException(sqle);
+			sqle.printStackTrace();
 		}
 	}
 	
@@ -122,20 +128,20 @@ public class CityDAO
 	{
 		try 
 		{
+			conn=DBConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement("UPDATE CITY SET name = ?, countrycode = ?,district=?, population=? WHERE id = ?");
 		    ps.setString(1,city.getCityName());
 		    ps.setString(2, city.getCityCountryCode());
 		    ps.setString(3, city.getCityDistrict());
 		    ps.setInt(4,city.getCityPopulation());
 		    ps.setInt(5,city.getCityId());
-	
-		    // call executeUpdate to execute our sql update statement
 		    ps.executeUpdate();
-				    
+		    ps.close();
+		    conn.close();
 		}
 		catch (Exception sqle) 
 		{
-			throw new RuntimeException(sqle);
+			sqle.printStackTrace();
 		}
 	}
 }

@@ -17,10 +17,6 @@ public class CityTableModel extends AbstractTableModel
 	   cities = new ArrayList<City>(); // to avoid NullPointer
     }
 
-//	public CityTableModel(List<City> cityList) 
-//	{
-//		this. cities = new ArrayList<City>();
-//	}
    public String getColumnName(int column)
    {    
 	   if (column < FIELD_NAMES.length) return FIELD_NAMES[column];
