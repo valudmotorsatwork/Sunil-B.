@@ -18,6 +18,4 @@ public class DataSourceResult
 	public void setData(List<?> data) {
 		this.data = data;
 	}
-
-	
 }

@@ -1,5 +1,4 @@
 package world.app;
-
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
@@ -9,29 +8,29 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
 import world.dao.CityDAO;
+import world.dao.CountryDAO;
 import world.domain.City;
-import world.domain.Country;
-
-/**
- * Servlet implementation class CityController
- */
+import world.domain.Login;
 @WebServlet("/CityController")
 public class CityController extends HttpServlet 
 {
 	private static final long serialVersionUID = 1L;
     CityDAO cityDao;   
- 
+    CountryDAO cdao;
     public CityController() {
         super();
         cityDao = new CityDAO();
+        cdao = new CountryDAO();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
+		HttpSession session = request.getSession(true);
 		List<City> cities = cityDao.loadAllCity();
 		Gson gson = new Gson();
 		response.setContentType("application/json");

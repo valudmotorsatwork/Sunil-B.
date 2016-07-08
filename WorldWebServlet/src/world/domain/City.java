@@ -6,6 +6,8 @@ public class City
 	private String cityDistrict;
 	private String cityPopulation;
 	private String cityCountryCode;
+	public City()
+	{}
 	public String getCityId() {
 		return cityId;
 	}
@@ -35,6 +37,11 @@ public class City
 	}
 	public void setCityCountryCode(String cityCountryCode) {
 		this.cityCountryCode = cityCountryCode;
+	}
+	public City(String cityId, String cityName) {
+		super();
+		this.cityId = cityId;
+		this.cityName = cityName;
 	}
 	
 }
